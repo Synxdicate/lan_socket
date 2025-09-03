@@ -9,8 +9,7 @@ const io = socketIo(server);
 app.use(express.static('public'));
 
 io.on('connection', (socket) => {
-    console.log('connected');
-
+    console.log('+')
     socket.on('typing', (data) => {
         socket.broadcast.emit('update', data);
     });
