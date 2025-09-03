@@ -15,36 +15,25 @@
 
 <body>
     <h1>พิมพ์ไรวะ</h1>
-    <button id="bt">copy text</button>
+    <button onclick="copy()">copy text</button>
     <p id="success" style="display: none; color:green;">ก้อปเสร็จยะ!</p>
     <textarea id="type"></textarea>
     <script>
         const socket = io();
         const type = document.getElementById('type');
-        const success = document.getElementById('success');
-        
-        type.addEventListener('input', () => {
-            socket.emit('typing', { text: type.value });
-        });
+        const success=document.getElementById('success');
+
         socket.on('update', (data) => {
             type.value = data.text; 
         });
-        document.addEventListener('DOMContentLoaded', () => {
-            const type = document.getElementById('type');
-            const copybt = document.getElementById('bt');
-            copybt.addEventListener('click',async ()=> {
-                try{
-                    await navigator.clipboard.writeText(type.value);
-                    success.style.display='block';   
-                    setTimeout(() => {
-                        success.style.display='none';
-                },3000);
-                    }
-                    catch(e){
-                        alert('error');
-                    }
-                });
-        });
+        function copy(){
+            type.select();
+            document.execCommand("copy");
+            success.style.display='block';
+            setTimeout(() => {
+                success.style.display='none';
+            },2000);
+        }
     </script>
 </body>
 </html>
